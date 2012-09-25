@@ -21,15 +21,16 @@ public class ServletDemo extends HttpServlet {
 	private static final long serialVersionUID = -3138593665070329088L;
 	private ActorRef printer;
 	private ActorRef greeter;
+	private ActorSystem actorSystem;
 
 	@Override
 	public void init() throws ServletException {
 		super.init();
 		
-		ActorSystem system = ActorSystem.create("ServletDemo");
+		actorSystem = ActorSystem.create("ServletDemo");
 
-		printer = system.actorOf(new Props(Printer.class));
-		greeter = system.actorOf(new Props(Greeter.class));
+		printer = actorSystem.actorOf(new Props(Printer.class));
+		greeter = actorSystem.actorOf(new Props(Greeter.class));
 
 	}
 	
