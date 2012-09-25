@@ -19,17 +19,25 @@ public class ServletDemo extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = -3138593665070329088L;
+	private ActorRef printer;
+	private ActorRef greeter;
 
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		
+		ActorSystem system = ActorSystem.create("ServletDemo");
+
+		printer = system.actorOf(new Props(Printer.class));
+		greeter = system.actorOf(new Props(Greeter.class));
+
+	}
+	
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
+		
 		AsyncContext asyncCtx = request.startAsync();
-
-		ActorSystem system = ActorSystem.create("ServletDemo");
-
-		ActorRef printer = system.actorOf(new Props(Printer.class));
-		ActorRef greeter = system.actorOf(new Props(Greeter.class));
 
 		// Initialise the printer with the AsyncContext object
 		printer.tell(asyncCtx);
@@ -83,4 +91,5 @@ public class ServletDemo extends HttpServlet {
 
 	public static class CloseMessage {
 	}
+
 }
