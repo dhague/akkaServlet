@@ -13,11 +13,22 @@
     <servlet>
         <servlet-name>ServletDemo</servlet-name>
         <servlet-class>com.sap.ids.ServletDemo</servlet-class>
+        <async-supported>true</async-supported>
+    </servlet>
+
+    <servlet>
+        <servlet-name>PlainServletDemo</servlet-name>
+        <servlet-class>com.sap.ids.PlainServletDemo</servlet-class>
+        <async-supported>true</async-supported>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>ServletDemo</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-
+    
+    <servlet-mapping>
+        <servlet-name>PlainServletDemo</servlet-name>
+        <url-pattern>/plain</url-pattern>
+    </servlet-mapping>
 </web-app> 

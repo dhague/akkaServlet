@@ -2,6 +2,7 @@ package com.sap.ids;
 
 import java.io.IOException;
 
+import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,25 +23,22 @@ public class ServletDemo extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+
+		AsyncContext asyncCtx = request.startAsync();
+
 		ActorSystem system = ActorSystem.create("ServletDemo");
 
 		ActorRef printer = system.actorOf(new Props(Printer.class));
 		ActorRef greeter = system.actorOf(new Props(Greeter.class));
 
-		// Initialise the printer with the response object
-		printer.tell(response);
+		// Initialise the printer with the AsyncContext object
+		printer.tell(asyncCtx);
 
 		// Send a message to the greeter
 		greeter.tell(printer);
 		greeter.tell("Darren");
 		greeter.tell(new CloseMessage());
 
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	/*
@@ -54,7 +52,7 @@ public class ServletDemo extends HttpServlet {
 			if (message instanceof ActorRef) {
 				printer = (ActorRef) message;
 			} else if (message instanceof String) {
-				printer.tell("Hello, " + message, this.getSelf());
+				printer.tell("Hello, " + message);
 			} else if (message instanceof CloseMessage) {
 				printer.tell(message);
 			} else
@@ -63,17 +61,20 @@ public class ServletDemo extends HttpServlet {
 	}
 
 	public static class Printer extends UntypedActor {
-		HttpServletResponse response;
+		AsyncContext asyncCtx;
 
 		public void onReceive(Object message) throws Exception {
 
-			if (message instanceof HttpServletResponse) {
-				response = (HttpServletResponse) message;
+			if (message instanceof AsyncContext) {
+				asyncCtx = (AsyncContext) message;
 
 			} else if (message instanceof String) {
-				response.getWriter().println(message);
+				asyncCtx.getResponse().getWriter().println(message);
+				
 			} else if (message instanceof CloseMessage) {
-				response.getWriter().close();
+				asyncCtx.getResponse().getWriter().close();
+				asyncCtx.complete();
+				
 			} else
 				unhandled(message);
 		}
