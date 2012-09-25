@@ -1,4 +1,4 @@
-package com.sap.ids;
+package com.fortybeans;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;

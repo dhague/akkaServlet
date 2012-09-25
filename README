@@ -1,5 +1,8 @@
 A sample for the Typesafe Stack (http://typesafe.com/stack).
 
-Akka 2.0 sample project using Java and Maven.
+Akka 2.0 sample project using Java and Maven to implement a simple asynchronous servlet.
 
-To run and test it use Maven invoke: 'mvn compile exec:java'
+To run and test it use Maven invoke: 'mvn clean install' and then copy the WAR file from target to a Tomcat 7.0 or other Servlet 3.0-compliant container.
+
+Call http://localhost:8080/akkaServlet-0.1-SNAPSHOT/ to test the Akka version
+Call http://localhost:8080/akkaServlet-0.1-SNAPSHOT/plain to test the plain old servlet version

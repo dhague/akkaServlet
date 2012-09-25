@@ -1,4 +1,4 @@
-package com.sap.ids;
+package com.fortybeans;
 
 import java.io.IOException;
 

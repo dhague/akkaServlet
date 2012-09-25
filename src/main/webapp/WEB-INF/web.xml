@@ -12,13 +12,13 @@
 
     <servlet>
         <servlet-name>ServletDemo</servlet-name>
-        <servlet-class>com.sap.ids.ServletDemo</servlet-class>
+        <servlet-class>com.fortybeans.ServletDemo</servlet-class>
         <async-supported>true</async-supported>
     </servlet>
 
     <servlet>
         <servlet-name>PlainServletDemo</servlet-name>
-        <servlet-class>com.sap.ids.PlainServletDemo</servlet-class>
+        <servlet-class>com.fortybeans.PlainServletDemo</servlet-class>
         <async-supported>true</async-supported>
     </servlet>
 
