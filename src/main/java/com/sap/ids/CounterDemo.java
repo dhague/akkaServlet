@@ -8,7 +8,7 @@ import akka.dispatch.Future;
 import akka.dispatch.OnSuccess;
 import static akka.pattern.Patterns.ask;
 
-public class Cpsauthenticate {
+public class CounterDemo {
 
     public static class Counter extends UntypedActor {
         int count = 0;
